@@ -1,5 +1,6 @@
 const express = require('express');
 const mysql = require('mysql2');
+const crypto = require('crypto');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -20,15 +21,46 @@ db.connect((err) => {
   }
 });
 
+function hashPassword(password) {
+  return crypto.createHash('sha256').update(password).digest('hex');
+}
+
 app.post('/register', (req, res) => {
   const { username, email, password } = req.body;
 
+  if (!username || !email || !password) {
+    return res.send("All fields are required");
+  }
+
+  const hashedPassword = hashPassword(password);
+
   const sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-  db.query(sql, [username, email, password], (err, result) => {
+  db.query(sql, [username, email, hashedPassword], (err, result) => {
     if (err) {
-      res.send("Error");
+      return res.send("Registration failed");
     } else {
-      res.send("User registered");
+      return res.send("User registered successfully");
+    }
+  });
+});
+
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.send("Email and password are required");
+  }
+
+  const hashedPassword = hashPassword(password);
+
+  const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+  db.query(sql, [email, hashedPassword], (err, result) => {
+    if (err) {
+      return res.send("Database error");
+    } else if (result.length > 0) {
+      return res.send("Login successful");
+    } else {
+      return res.send("Invalid login");
     }
   });
 });
