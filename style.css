@@ -172,3 +172,11 @@ body {
     border-top-left-radius: 180px 60px;
     border-top-right-radius: 180px 60px;
   }
+.dashboard-hero {
+  padding: 60px 20px;
+}
+
+.feature-box p {
+  font-size: 14px;
+  line-height: 1.5;
+}
