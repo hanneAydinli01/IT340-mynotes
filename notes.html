@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyNotes - Notes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="navbar">
+      <div class="logo">MyNotes</div>
+
+      <div class="nav-links">
+        <a href="dashboard.html" class="nav-btn">Dashboard</a>
+        <a href="notes.html" class="nav-btn">My Notes</a>
+        <a href="search.html" class="nav-btn">Article Lookup</a>
+        <a href="login.html" class="nav-btn">Logout</a>
+      </div>
+    </div>
+
+    <div class="hero dashboard-hero">
+      <h1>My Notes</h1>
+      <p>Create a note and save it to your account.</p>
+    </div>
+
+    <div class="form-container notes-form">
+      <div class="form-box">
+        <h1>New Note</h1>
+
+        <form action="http://172.16.50.129:3000/add-note" method="POST">
+          <input type="email" name="user_email" placeholder="Your Email">
+          <input type="text" name="title" placeholder="Note Title">
+          <textarea name="content" placeholder="Write your note here"></textarea>
+          <button type="submit" class="main-btn full-btn">Save Note</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
