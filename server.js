@@ -15,7 +15,8 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
   if (err) {
-    console.log("DB connection error:", err);
+    console.log("DB connection error:");
+    console.log(err);
   } else {
     console.log("Connected to DB");
   }
@@ -28,18 +29,15 @@ function hashPassword(password) {
 app.post('/register', (req, res) => {
   const { username, email, password } = req.body;
 
-  if (!username || !email || !password) {
-    return res.send("All fields are required");
-  }
-
   const hashedPassword = hashPassword(password);
 
   const sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+
   db.query(sql, [username, email, hashedPassword], (err, result) => {
     if (err) {
-      return res.send("Registration failed");
+      res.send("Error");
     } else {
-      return res.send("User registered successfully");
+      res.send("User registered");
     }
   });
 });
@@ -54,11 +52,14 @@ app.post('/login', (req, res) => {
   const hashedPassword = hashPassword(password);
 
   const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+
   db.query(sql, [email, hashedPassword], (err, result) => {
     if (err) {
       return res.send("Database error");
-    } else if (result.length > 0) {
-      return res.send("Login successful");
+    }
+
+    if (result.length > 0) {
+      return res.redirect('http://172.16.50.132/dashboard.html');
     } else {
       return res.send("Invalid login");
     }

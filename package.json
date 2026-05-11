@@ -2,16 +2,16 @@
   "name": "mynotes-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^5.2.1",
-    "mysql2": "^3.22.1"
+    "mysql": "^2.18.1",
+    "mysql2": "^3.22.3"
   }
 }
